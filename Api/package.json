@@ -1,0 +1,25 @@
+{
+  "name": "photorello-api",
+  "version": "1.0.0",
+  "description": "photorello api",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "photo",
+    "sharing",
+    "app",
+    "api"
+  ],
+  "author": "Ahmed Semih Erkan",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}

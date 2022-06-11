@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { Typography, Box, Button, TextField, InputAdornment, InputLabel, FormControl, IconButton, OutlinedInput, FormControlLabel, Checkbox, FormHelperText } from '@mui/material';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import SignupValidations from '../validations/SignupValidations';
+import { Signup } from '../services/AuthServices';
 
 
-function SignupModal() {
+const SignupModal = forwardRef(({ setOpen, setSignupAlert, setResult }, ref) => {
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
@@ -19,9 +20,18 @@ function SignupModal() {
             password: '',
             terms: false
         },
-        onSubmit: values => {
-            console.log(values.username);
+        onSubmit: async values => {
+
+            var data = await Signup(values.email, values.username, values.password);
+            var result = await data.data;
+            setResult(result);
+            setSignupAlert(true);
             resetForm();
+
+            if (!result.error) {
+                setOpen(false);
+            }
+
         },
         validationSchema: SignupValidations
     })
@@ -83,13 +93,13 @@ function SignupModal() {
                     value={values.terms}
                     name='terms'
                     label="I agree the Terms of Service and Privacy Policy." />
-                <Button sx={{ mt: 1 }} variant="contained" color="error" disabled={!isValid} type='submit' onSubmit={handleSubmit} >
+                <Button sx={{ mt: 1 }} variant="contained" color="error" disabled={!isValid} type='submit' onClick={handleSubmit} >
                     Sign Up
                 </Button>
             </Box>
             <Box sx={{ backgroundColor: '#e61605', height: '1rem', mt: 5 }}></Box>
         </Box>
     )
-}
+});
 
 export default SignupModal;

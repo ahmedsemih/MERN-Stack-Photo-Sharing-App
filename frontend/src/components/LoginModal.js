@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { Typography, Box, Button, TextField, InputAdornment, InputLabel, FormControl, IconButton, OutlinedInput } from '@mui/material';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import LoginValidations from '../validations/LoginValidations';
+import { Login } from '../services/AuthServices';
+import { useUserContext } from '../contexts/UserContext';
 
-function LoginModal() {
+const LoginModal = forwardRef(({ setOpen, setLoginAlert, setResult }, ref) => {
 
     const [showPassword, setShowPassword] = useState(false);
+    const { setUser } = useUserContext();
+
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -16,9 +20,22 @@ function LoginModal() {
             email: '',
             password: '',
         },
-        onSubmit: values => {
-            console.log(values.email, values.password);
+        onSubmit: async values => {
+
+            var data = await Login(values.email, values.password);
+            var result = await data.data;
+            var user = await result.currentUser;
+
+            setResult(result);
+            setLoginAlert(true);
             resetForm();
+            setUser(user._id)
+            localStorage.setItem('UID', user._id);
+
+            if (user._id !== null) {
+                setOpen(false);
+            }
+
         },
         validationSchema: LoginValidations,
     });
@@ -69,7 +86,8 @@ function LoginModal() {
             </Box>
             <Box sx={{ backgroundColor: '#e61605', height: '1rem', mt: 5 }}></Box>
         </Box>
-    )
-}
 
-export default LoginModal
+    )
+});
+
+export default LoginModal;

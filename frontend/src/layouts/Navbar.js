@@ -19,7 +19,7 @@ function Navbar() {
     const { user, setUser } = useUserContext();
 
     const onClickLogout = () => {
-        localStorage.setItem('UID', null);
+        localStorage.removeItem('UID');
         setUser(null);
         navigate('/');
     }
@@ -84,7 +84,7 @@ function Navbar() {
                                 variant='contained' 
                                 color='error' 
                                 sx={{ fontWeight: 'bold', borderRadius: '25px' }} 
-                                onClick={() => navigate('/profile')} 
+                                onClick={() => navigate(`/profile/${user}`)} 
                                 ><Person sx={{ mr: 1 }} />Account</Button>
                             </Box>
                     }

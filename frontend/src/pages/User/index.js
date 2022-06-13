@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { PhotoLibrary, Group } from '@mui/icons-material';
+import { useUserContext } from '../../contexts/UserContext';
+import { getUser } from '../../services/UserServices';
 
 import UserArea from './Components/UserArea';
 import UserTab from './Components/UserTab';
@@ -10,6 +12,13 @@ import PhotoTab from './Components/PhotoTab';
 function Profile() {
 
     const [value, setValue] = useState('1');
+    const [data, setData] = useState("");
+    const { user } = useUserContext();
+
+    useEffect(() => {
+        getUser(user).then(d => { setData(d.user) });
+
+    }, [user]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -17,17 +26,17 @@ function Profile() {
 
     return (
         <Box>
-            <UserArea />
-            <Box sx={{ width: '100%', typography: 'body1',px:'5vw' }}>
+            <UserArea user={data} currentUser={user} />
+            <Box sx={{ width: '100%', typography: 'body1', px: '5vw' }}>
                 <TabContext value={value}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider', display:'flex', justifyContent:'center', color:'black' }}>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'center', color: 'black' }}>
                         <TabList onChange={handleChange} textColor='inherit' indicatorColor='inherit' >
-                            <Tab icon={<PhotoLibrary/>} label="Photo" value="1" />
-                            <Tab icon={<Group/>} label="Followings" value="2" />
+                            <Tab icon={<PhotoLibrary />} label="Photo" value="1" />
+                            <Tab icon={<Group />} label="Following" value="2" />
                         </TabList>
                     </Box>
-                    <TabPanel sx={{p:0}} value="1"><PhotoTab/></TabPanel>
-                    <TabPanel sx={{p:0}} value="2"><UserTab/></TabPanel>
+                    <TabPanel sx={{ p: 0 }} value="1"><PhotoTab userId={user} /></TabPanel>
+                    <TabPanel sx={{ p: 0 }} value="2"><UserTab followings={data.followings} /></TabPanel>
                 </TabContext>
             </Box>
         </Box>

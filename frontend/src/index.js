@@ -20,6 +20,7 @@ root.render(
           <Route exact path='/' element={<Home />} />
           <Route exact path='/profile' element={<Profile />} />
           <Route exact path='/photo' element={<Photo />} />
+          <Route path='/profile/:id' element={<Profile />} />
         </Routes>
       </Router>
     </UserProvider>

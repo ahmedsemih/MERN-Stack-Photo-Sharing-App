@@ -13,7 +13,9 @@ function Following({ following }) {
   const { user } = useUserContext();
 
   useEffect(() => {
-    getUser(following.id).then(data => setFUser(data.user));
+    if(following !== null){
+      getUser(following.id).then(data => setFUser(data.user));
+    }
   }, [following]);
 
   const onClickFollow = () => {
@@ -26,28 +28,30 @@ function Following({ following }) {
     setIsFollowed(false);
   };
 
-  return (
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', py: 2, px: { xs: 0, sm: 1, md: 2 }, borderBottom: 1, borderBottomColor: 'divider' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar
-          alt={fUser.username}
-          src={fUser.imageUrl}
-          sx={{ mr: 1 }}
-        />
-        <Typography>{fUser.username}</Typography>
+  if (following !== null) {
+    return (
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', py: 2, px: { xs: 0, sm: 1, md: 2 }, borderBottom: 1, borderBottomColor: 'divider' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Avatar
+            alt={fUser.username}
+            src={fUser.imageUrl}
+            sx={{ mr: 1 }}
+          />
+          <Typography>{fUser.username}</Typography>
+        </Box>
+        {
+          isFollowed ?
+            <Button variant="contained" color="error" onClick={onClickUnfollow}>
+              <PersonRemove />
+            </Button>
+            :
+            <Button variant="contained" color="error" onClick={onClickFollow} >
+              <PersonAddAlt1 />
+            </Button>
+        }
       </Box>
-      {
-        isFollowed ?
-          <Button variant="contained" color="error" onClick={onClickUnfollow}>
-            <PersonRemove />
-          </Button>
-          :
-          <Button variant="contained" color="error" onClick={onClickFollow} >
-            <PersonAddAlt1 />
-          </Button>
-      }
-    </Box>
-  )
+    )
+  }
 }
 
 export default Following;

@@ -10,11 +10,11 @@ exports.createUser = async (req, res) => {
             newUser
         });
 
-    } catch (error) {
+    } catch (err) {
 
-        res.status(400).json({
+        res.status(200).json({
             status: 'failed',
-            error
+            error: 'This email is already in use'
         });
     }
 };
@@ -36,6 +36,12 @@ exports.loginUser = (req, res) => {
                             error: 'Wrong email or password'
                         });
                     }
+                });
+            }
+            else {
+                res.status(200).json({
+                    status: 'failed',
+                    error: 'Wrong email or password'
                 });
             }
         });
@@ -119,9 +125,9 @@ exports.addFollower = async (req, res) => {
 
 exports.deleteFollower = async (req, res) => {
     try {
-        const followed = await User.findById(req.body.followedId);
         const follower = await User.findById(req.body.followerId);
-
+        const followed = await User.findById(req.body.followedId);
+        
         follower.followings.forEach((f, index) => {
             if (f.id === req.body.followedId) {
                 follower.followings[index] = null

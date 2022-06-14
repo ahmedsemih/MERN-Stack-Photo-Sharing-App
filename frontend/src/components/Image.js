@@ -27,10 +27,10 @@ function Image({ imageUrl, title, publisher, publisherName, id }) {
 
   return (
     <ImageListItem className='image-area'>
-      <img alt={title} src={imageUrl} />
+      <img onClick={()=>navigate(`/photo/${id}`)} alt={title} src={imageUrl} />
       <ImageListItemBar
         className='image-text'
-        sx={{ p: 3, display: 'none' }}
+        sx={{ p: 2, display: 'none' }}
         title={title}
         subtitle={`@${publisherName}`}
         actionIcon={

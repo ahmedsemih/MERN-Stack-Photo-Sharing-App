@@ -8,6 +8,8 @@ import Home from './pages/Home';
 import Profile from './pages/User';
 import Navbar from './layouts/Navbar';
 import Photo from './pages/Photo';
+import Upload from './pages/Upload';
+import Edit from './pages/Edit';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,7 +21,9 @@ root.render(
         <Routes>
           <Route exact path='/' element={<Home />} />
           <Route exact path='/profile' element={<Profile />} />
-          <Route exact path='/photo' element={<Photo />} />
+          <Route exact path='/photo/:id' element={<Photo />} />
+          <Route exact path='/upload' element={<Upload />} />
+          <Route exact path='/edit' element={<Edit />} />
           <Route path='/profile/:id' element={<Profile />} />
         </Routes>
       </Router>

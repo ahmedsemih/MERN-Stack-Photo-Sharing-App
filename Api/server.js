@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 
 const photoRoutes = require('./routes/photoRoutes');
@@ -12,6 +13,7 @@ const port = 4000;
 // MIDDLEWARES
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors({ origin: '*', methods: '*' }));
 
 
 // ROUTES

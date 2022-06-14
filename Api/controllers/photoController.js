@@ -19,7 +19,7 @@ exports.getAllPhotos = async (req, res) => {
 
 exports.getPhotosByCategoryId = async (req, res) => {
     try {
-        var photos = await Photo.findOne({ category: req.query.category });
+        var photos = await Photo.find({ category: req.params.id });
 
         res.status(200).json({
             status: 'success',
@@ -36,7 +36,7 @@ exports.getPhotosByCategoryId = async (req, res) => {
 
 exports.getPhotosByPublisherId = async (req, res) => {
     try {
-        var photos = await Photo.findOne({ publisher: req.qury.publisher });
+        var photos = await Photo.find({ publisher: req.params.id });
 
         res.status(200).json({
             status: 'success',
@@ -92,7 +92,8 @@ exports.updatePhoto = async (req, res) => {
             title: req.body.title,
             description: req.body.description,
             category: req.body.category,
-            publisher: req.body.publisher
+            publisher: req.body.publisher,
+            publisherName: req.body.name
         }, { new: true });
 
         res.status(200).json({

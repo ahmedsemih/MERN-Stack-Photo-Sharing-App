@@ -16,7 +16,7 @@ function PhotoTab({ userId }) {
   return (
     <Box sx={{ px: 5, py: 3, display: 'flex', justifyContent: 'center' }}>
       <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={3} >
-        {
+        {  
           photos.map((photo, index) => {
             return <Image key={index} publisher={photo.publisher} publisherName={photo.publisherName} title={photo.title} imageUrl={photo.imageUrl} id={photo._id} />
           })
@@ -24,6 +24,7 @@ function PhotoTab({ userId }) {
       </Masonry>
     </Box>
   )
+
 }
 
 export default PhotoTab;

@@ -7,9 +7,9 @@ router.route('/').get(getAllPhotos);
 
 router.route('/:id').get(getPhotoById);
 
-router.route('/?category=id').get(getPhotosByCategoryId);
+router.route('/category/:id').get(getPhotosByCategoryId);
 
-router.route('/?publisher=id').get(getPhotosByPublisherId);
+router.route('/publisher/:id').get(getPhotosByPublisherId);
 
 router.route('/').post(addPhoto);
 

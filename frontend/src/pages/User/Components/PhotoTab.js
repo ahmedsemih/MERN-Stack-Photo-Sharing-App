@@ -14,7 +14,7 @@ function PhotoTab({ userId }) {
   }, [userId])
 
   return (
-    <Box sx={{ px: 5, py: 3, display: 'flex', justifyContent: 'center' }}>
+    <Box sx={{ px:{xs:0,sm:1,md:3}, py: 3, display: 'flex', justifyContent: 'center' }}>
       <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={3} >
         {  
           photos.map((photo, index) => {

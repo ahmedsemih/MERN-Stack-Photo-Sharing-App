@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Box, Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { PhotoLibrary, Group } from '@mui/icons-material';
@@ -14,11 +15,12 @@ function Profile() {
     const [value, setValue] = useState('1');
     const [data, setData] = useState("");
     const { user } = useUserContext();
+    const {id} = useParams();
 
     useEffect(() => {
-        getUser(user).then(d => { setData(d.user) });
+        getUser(id).then(d => { setData(d.user) });
 
-    }, [user]);
+    }, [user, id]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -35,7 +37,7 @@ function Profile() {
                             <Tab icon={<Group />} label="Following" value="2" />
                         </TabList>
                     </Box>
-                    <TabPanel sx={{ p: 0 }} value="1"><PhotoTab userId={user} /></TabPanel>
+                    <TabPanel sx={{ p: 0 }} value="1"><PhotoTab userId={id} /></TabPanel>
                     <TabPanel sx={{ p: 0 }} value="2"><UserTab followings={data.followings} /></TabPanel>
                 </TabContext>
             </Box>

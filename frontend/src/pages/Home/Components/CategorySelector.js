@@ -1,18 +1,27 @@
-import React from 'react';
-import {Box, Button} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, Button } from '@mui/material';
+
+import { getAllCategories } from '../../../services/CategoryServices';
 
 function CategorySelector() {
+
+  const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getAllCategories().then(data => setCategories(data.allCategories));
+  }, [])
+
   return (
     <Box mt={4}>
-        <Button sx={{color:'black', borderRadius:'25px', backgroundColor:'whitesmoke', m:1}} variant='error' >Fashion</Button>
-        <Button sx={{color:'black', borderRadius:'25px', backgroundColor:'whitesmoke', m:1}} variant='error' >Sports</Button>
-        <Button sx={{color:'black', borderRadius:'25px', backgroundColor:'whitesmoke', m:1}} variant='error' >Art</Button>
-        <Button sx={{color:'black', borderRadius:'25px', backgroundColor:'whitesmoke', m:1}} variant='error' >Architecture</Button>
-        <Button sx={{color:'black', borderRadius:'25px', backgroundColor:'whitesmoke', m:1}} variant='error' >Technology</Button>
-        <Button sx={{color:'black', borderRadius:'25px', backgroundColor:'whitesmoke', m:1}} variant='error' >Travel</Button>
-        <Button sx={{color:'black', borderRadius:'25px', backgroundColor:'whitesmoke', m:1}} variant='error' >Flight</Button>
+      {
+        categories.map((category, index) => {
+          return <Button onClick={() => navigate(`/?category=${category._id}`)} key={index} sx={{ display: category.status ? 'inline' : 'none', color: 'black', borderRadius: '25px', backgroundColor: 'whitesmoke', m: 1 }} variant='error' >{category.name}</Button>
+        })
+      }
     </Box>
   )
 }
 
-export default CategorySelector
+export default CategorySelector;

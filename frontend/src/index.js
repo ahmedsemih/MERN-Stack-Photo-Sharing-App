@@ -20,11 +20,12 @@ root.render(
         <Navbar />
         <Routes>
           <Route exact path='/' element={<Home />} />
+          <Route path='/?category=:id' element={<Home />} />
           <Route exact path='/profile' element={<Profile />} />
+          <Route path='/profile/:id' element={<Profile />} />
           <Route exact path='/photo/:id' element={<Photo />} />
           <Route exact path='/upload' element={<Upload />} />
           <Route exact path='/edit' element={<Edit />} />
-          <Route path='/profile/:id' element={<Profile />} />
         </Routes>
       </Router>
     </UserProvider>

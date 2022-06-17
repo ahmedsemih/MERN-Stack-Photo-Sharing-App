@@ -1,4 +1,5 @@
-const Photo = require('../models/Photo')
+const Photo = require('../models/Photo');
+var cloudinary = require('cloudinary').v2;
 
 exports.getAllPhotos = async (req, res) => {
     try {
@@ -84,6 +85,24 @@ exports.addPhoto = async (req, res) => {
         });
     };
 };
+
+exports.uploadPhotoToCloudinary= async (req,res)=>{
+    const image = await req.body.image;
+    try{
+        const uploadedImage = await cloudinary.v2.uploader.upload(image, {
+            allowed_formats: ['png', 'jpg', 'jpeg', 'svg','webp','jfif','ico'],
+        });
+
+    res.status(200).json({
+        uploadedImage
+    });
+    }catch(error){
+        res.status(400).json({
+            status:'error',
+            error
+        })
+    }
+}
 
 exports.updatePhoto = async (req, res) => {
     try {

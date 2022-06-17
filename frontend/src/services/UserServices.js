@@ -7,14 +7,14 @@ export const getUser = async (userId) => {
 
 export const followUser = (followerId, followedId) => {
     axios.post('http://localhost:4000/users/followers', {
-        followerId,
-        followedId
+        followerId:followerId,
+        followedId:followedId
     });
 };
 
 export const unfollowUser = (followerId, followedId) => {
     axios.delete('http://localhost:4000/users/followers', {
-        followerId,
-        followedId
+        followerId:followerId,
+        followedId:followedId
     });
 };

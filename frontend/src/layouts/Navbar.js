@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Container, Typography, Box, Button, Modal, Snackbar, Alert } from '@mui/material';
-import { Camera, Login, Person, Logout } from '@mui/icons-material';
+import { AppBar, Container, Typography, Box, Button, Modal, Snackbar, Alert, IconButton } from '@mui/material';
+import { Camera, Login, Person, Logout, AddAPhoto } from '@mui/icons-material';
 import LoginModal from '../components/LoginModal';
 import SignupModal from '../components/SignupModal';
 import { useUserContext } from '../contexts/UserContext';
@@ -86,6 +86,7 @@ function Navbar() {
                                 sx={{ fontWeight: 'bold', borderRadius: '25px' }} 
                                 onClick={() => navigate(`/profile/${user}`)} 
                                 ><Person sx={{ mr: 1 }} />Account</Button>
+                                <IconButton color='error' onClick={()=>navigate('/upload')} ><AddAPhoto/></IconButton>
                             </Box>
                     }
                 </Container>

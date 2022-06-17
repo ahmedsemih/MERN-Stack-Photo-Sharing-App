@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Button, Avatar } from '@mui/material';
 import { PersonRemove, PersonAddAlt1 } from '@mui/icons-material';
 
@@ -11,6 +12,7 @@ function Following({ following }) {
   const [isFollowed, setIsFollowed] = useState(true);
 
   const { user } = useUserContext();
+  const navigate=useNavigate();
 
   useEffect(() => {
     if(following !== null){
@@ -33,9 +35,10 @@ function Following({ following }) {
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', py: 2, px: { xs: 0, sm: 1, md: 2 }, borderBottom: 1, borderBottomColor: 'divider' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Avatar
+            onClick={()=>navigate(`/profile/${following.id}`)}
             alt={fUser.username}
             src={fUser.imageUrl}
-            sx={{ mr: 1 }}
+            sx={{ mr: 1, cursor:'pointer' }}
           />
           <Typography>{fUser.username}</Typography>
         </Box>

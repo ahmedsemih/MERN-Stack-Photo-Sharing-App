@@ -66,7 +66,7 @@ function Photo() {
 
   return (
     <Box sx={{ height: '80vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Card sx={{ maxWidth: 1400, boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', p: 2 }}>
+      <Card sx={{ boxShadow:{md: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}, p: 2, mt: '10vh' }}>
         <CardHeader
           avatar={
             <Avatar sx={{ cursor: 'pointer' }} onClick={onClickAvatar} src={publisher.imageUrl} />
@@ -75,6 +75,7 @@ function Photo() {
           subheader={moment(photo.publishedAt).format('DD/MM/YYYY -  hh:mm A')}
         />
         <CardMedia
+          sx={{ maxHeight:{xs:300,sm:500} }}
           component="img"
           height="auto"
           image={photo.imageUrl}
@@ -98,7 +99,7 @@ function Photo() {
           {
             user === publisher._id
             &&
-            <IconButton sx={{ ml: 'auto', color:'rgba(20, 20, 20, 1)' }}>
+            <IconButton sx={{ ml: 'auto', color: 'rgba(20, 20, 20, 1)' }}>
               <Edit onClick={onClickEdit} />
             </IconButton>
           }

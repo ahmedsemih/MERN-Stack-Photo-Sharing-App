@@ -8,7 +8,7 @@ function UserArea({ user, currentUser }) {
                 <Avatar
                     alt="Photography"
                     src={user.imageUrl}
-                    sx={{ width: '20vh', height: '20vh', mx: 'auto' }}
+                    sx={{ width: '20vh', height: '20vh', mx: 'auto', cursor:'pointer' }}
                 />
                 <Typography variant="h5" sx={{ mt: 3, mx: 'auto', fontWeight: '800' }}>@{user.username}</Typography>
                 <Typography sx={{ mt: 1, mx: 'auto', fontSize: '1.3rem', fontWeight: '300' }}>{user.email}</Typography>

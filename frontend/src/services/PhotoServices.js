@@ -38,7 +38,7 @@ export const uploadPhotoToCloudinary = async (image) => {
     data.append("upload_preset", "yop7c76h");
     data.append("cloud_name", "dcm29mbom");
     const result = await fetch(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, {
-        method:'POST',
+        method: 'POST',
         body: data
     })
         .then(res => res.json());
@@ -53,6 +53,11 @@ export const updatePhoto = async (photoId, title, description, category) => {
     });
     return data;
 };
+
+export const deletePhoto = async (photoId) => {
+    const { data } = await axios.delete(`http://localhost:4000/photos/${photoId}`);
+    return data;
+}
 
 // LIKE SYSTEM
 

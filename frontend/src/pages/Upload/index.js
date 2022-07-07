@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Box, TextField, Button, FormControl, Select, Typography, InputLabel, MenuItem, Input } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Box, TextField, Button, FormControl, Select, Typography, InputLabel, MenuItem, Input, Snackbar, Alert } from '@mui/material';
 import { useFormik } from 'formik';
 
 import { PhotoValidations } from '../../validations/PhotoValidations';
-import {uploadPhotoToCloudinary, addPhoto} from '../../services/PhotoServices';
+import { uploadPhotoToCloudinary, addPhoto } from '../../services/PhotoServices';
 import { getAllCategories } from '../../services/CategoryServices';
 import { getUser } from '../../services/UserServices';
 import { useUserContext } from '../../contexts/UserContext';
@@ -11,10 +12,13 @@ import { useUserContext } from '../../contexts/UserContext';
 function Upload() {
 
   const { user } = useUserContext();
+  const navigate=useNavigate();
 
   const [image, setImage] = useState("");
   const [categories, setCategories] = useState([]);
   const [currentUser, setCurrentUser] = useState("");
+  const [openAlert, setOpenAlert] = useState(false);
+  const [result, setResult] = useState("");
 
   useEffect(() => {
     getAllCategories().then(data => setCategories(data.allCategories));
@@ -29,10 +33,14 @@ function Upload() {
     },
     onSubmit: values => {
 
-     uploadPhotoToCloudinary(image).then(data=>{
-      addPhoto(data.url,values.title,values.description,values.category,currentUser._id,currentUser.username)
-    });
-          
+      uploadPhotoToCloudinary(image).then(data => {
+        addPhoto(data.url, values.title, values.description, values.category, currentUser._id, currentUser.username).then(data => setResult(data));
+        setOpenAlert(true);
+        setTimeout(() => {
+          navigate(-1);
+      }, 1500)
+      });
+
       resetForm();
     },
     validationSchema: PhotoValidations,
@@ -44,7 +52,6 @@ function Upload() {
 
   return (
     <Box sx={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Box sx={{ backgroundColor: '#e61605', height: '1rem', mb: 3 }}></Box>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: { xs: 'column', sm: 'column', md: 'row' } }}>
         <Box
           sx={{
@@ -105,7 +112,13 @@ function Upload() {
           </Box>
         </Box>
       </Box>
-      <Box sx={{ backgroundColor: '#e61605', height: '1rem', mt: 3 }}></Box>
+
+      {/* Alert */}
+      <Snackbar open={openAlert} autoHideDuration={3000} onClose={() => setOpenAlert(false)} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
+        <Alert severity={result !== null && result.status === 'failed' ? 'error' : 'success'} onClose={() => setOpenAlert(false)}>
+          {result !== null && result.status === 'success' ? 'Successfully uploaded.' : 'Somethings went wrong.'}
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }

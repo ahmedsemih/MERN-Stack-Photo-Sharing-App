@@ -12,7 +12,7 @@ function Upload() {
 
   const { user } = useUserContext();
 
-  const [image, setImage] = useState();
+  const [image, setImage] = useState("");
   const [categories, setCategories] = useState([]);
   const [currentUser, setCurrentUser] = useState("");
 
@@ -29,16 +29,17 @@ function Upload() {
     },
     onSubmit: values => {
 
-      const response=uploadPhotoToCloudinary(image);
-      console.log(response);
-
+     uploadPhotoToCloudinary(image).then(data=>{
+      addPhoto(data.url,values.title,values.description,values.category,currentUser._id,currentUser.username)
+    });
+          
       resetForm();
     },
     validationSchema: PhotoValidations,
   });
 
   const chooseImage = (e) => {
-    setImage(e.target.files);
+    setImage(e.target.files[0]);
   };
 
   return (

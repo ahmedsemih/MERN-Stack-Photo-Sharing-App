@@ -32,13 +32,17 @@ export const addPhoto = async (imageUrl, title, description, category, publisher
     return data;
 };
 
-export const uploadPhotoToCloudinary = async (images) => {
-    const image=images[0];
-
-    const { data } = await axios.post('http://localhost:4000/photos/upload', {
-        image:image
-    });
-    return data;
+export const uploadPhotoToCloudinary = async (image) => {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "yop7c76h");
+    data.append("cloud_name", "dcm29mbom");
+    const result = await fetch(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, {
+        method:'POST',
+        body: data
+    })
+        .then(res => res.json());
+    return result;
 };
 
 export const updatePhoto = async (photoId, title, description, category) => {

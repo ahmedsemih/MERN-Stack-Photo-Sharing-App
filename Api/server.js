@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cloudinary = require('cloudinary').v2;
 const cors = require('cors');
 require('dotenv').config();
 
@@ -21,15 +20,6 @@ app.use(cors({ origin: '*', methods: '*' }));
 app.use('/photos', photoRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/users', userRoutes);
-
-
-// CLOUDINARY CONFIG
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
 
 mongoose.connect(process.env.MONGODB_URL)
     .then(console.log("Successfully connected to database"));

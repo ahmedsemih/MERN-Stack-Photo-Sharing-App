@@ -86,6 +86,24 @@ exports.getUserById = async (req, res) => {
     }
 };
 
+exports.setProfilePhoto = async (req, res) => {
+    try {
+        const profilePhoto = await User.findByIdAndUpdate(req.params.id, {
+            imageUrl: req.body.imageUrl
+        }, { new: true });
+
+        res.status(200).json({
+            status: 'success',
+            profilePhoto
+        })
+
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            error
+        })
+    }
+}
 
 // FOLLOWING SYSTEM
 
@@ -127,7 +145,7 @@ exports.deleteFollower = async (req, res) => {
     try {
         const follower = await User.findById(req.body.followerId);
         const followed = await User.findById(req.body.followedId);
-        
+
         follower.followings.forEach((f, index) => {
             if (f.id === req.body.followedId) {
                 follower.followings[index] = null

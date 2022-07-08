@@ -7,14 +7,21 @@ export const getUser = async (userId) => {
 
 export const followUser = (followerId, followedId) => {
     axios.post('http://localhost:4000/users/followers', {
-        followerId:followerId,
-        followedId:followedId
+        followerId: followerId,
+        followedId: followedId
     });
 };
 
 export const unfollowUser = (followerId, followedId) => {
     axios.delete('http://localhost:4000/users/followers', {
-        followerId:followerId,
-        followedId:followedId
+        followerId: followerId,
+        followedId: followedId
     });
 };
+
+export const setProfilePhoto = async (userId, image) => {
+    const { data } = await axios.put(`http://localhost:4000/users/${userId}/photo`, {
+        imageUrl: image
+    });
+    return data;
+}

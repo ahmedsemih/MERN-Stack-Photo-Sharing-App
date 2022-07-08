@@ -1,7 +1,7 @@
 const express=require('express');
 const router=express.Router();
 
-const { getAllUsers, loginUser, createUser, getUserById, addFollower, deleteFollower } = require('../controllers/userController');
+const { getAllUsers, loginUser, createUser, getUserById, addFollower, deleteFollower, setProfilePhoto } = require('../controllers/userController');
 
 router.route('/').get(getAllUsers);
 
@@ -14,5 +14,7 @@ router.route('/login').post(loginUser);
 router.route('/followers').post(addFollower);
 
 router.route('/followers').delete(deleteFollower);
+
+router.route('/:id/photo').put(setProfilePhoto);
 
 module.exports = router;

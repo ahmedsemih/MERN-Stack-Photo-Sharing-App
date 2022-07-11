@@ -61,10 +61,16 @@ export const deletePhoto = async (photoId) => {
 
 // LIKE SYSTEM
 
-export const addLike = (photoId) => {
-    axios.put(`http://localhost:4000/photos/likes/${photoId}`);
+export const addLike = (photoId,likerId) => {
+
+    axios.put(`http://localhost:4000/photos/${photoId}/likes/${likerId}`,{
+        liker:likerId
+    });
 };
 
-export const removeLike = (photoId) => {
-    axios.delete(`http://localhost:4000/photos/likes/${photoId}`);
+export const removeLike = (photoId,likerId) => {
+    const id=likerId
+    axios.delete(`http://localhost:4000/photos/${photoId}/likes/${likerId}`,{
+        liker:id
+    });
 }

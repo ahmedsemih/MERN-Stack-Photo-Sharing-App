@@ -113,7 +113,7 @@ exports.addFollower = async (req, res) => {
         const follower = await User.findById(req.params.followerId);
         const followed = await User.findById(req.params.followedId);
 
-        const isFriend = false;
+        var isFriend = false;
         const followingsArray = []
         follower.followings.forEach((f) => {
             followingsArray.push(f);

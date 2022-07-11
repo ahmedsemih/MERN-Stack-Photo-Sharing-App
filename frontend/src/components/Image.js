@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ImageListItem, ImageListItemBar, IconButton } from '@mui/material';
 import { Favorite, Edit } from '@mui/icons-material';
 
 import { useUserContext } from '../contexts/UserContext';
 import { addLike, removeLike } from '../services/PhotoServices';
+import useLikeStatus from '../hooks/useLikeStatus';
 
 function Image({ imageUrl, title, publisher, publisherName, id }) {
 
-  const [likeButton, setLikeButton] = useState(false);
   const { user } = useUserContext();
+  const [likeStatus] = useLikeStatus(id, user);
+  const [likeButton, setLikeButton] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setLikeButton(likeStatus);
+  }, [likeStatus]);
+
   const onClickLike = () => {
-    setLikeButton(!likeButton);
     if (likeButton) {
-      removeLike(id);
+      removeLike(id, user);
     } else {
-      addLike(id);
+      addLike(id, user);
     }
+    setLikeButton(!likeButton);
+
   }
 
   const onClickEdit = () => {
@@ -27,7 +34,7 @@ function Image({ imageUrl, title, publisher, publisherName, id }) {
 
   return (
     <ImageListItem className='image-area'>
-      <img onClick={()=>navigate(`/photo/${id}`)} alt={title} src={imageUrl} />
+      <img onClick={() => navigate(`/photo/${id}`)} alt={title} src={imageUrl} />
       <ImageListItemBar
         className='image-text'
         sx={{ p: 2, display: 'none' }}

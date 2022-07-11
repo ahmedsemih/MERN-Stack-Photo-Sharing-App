@@ -132,39 +132,61 @@ exports.deletePhoto = async (req, res) => {
 exports.addLike = async (req, res) => {
     try {
 
-        const photo = await Photo.findById(req.params.id);
-        photo.likes+=1;
-        photo.save();
+        const photo = await Photo.findById(req.params.photoId);
+        var isLiked = false;
+        const likersArray = [];
 
-        res.status(200).json({
-            status: 'success',
-            photo
-        })
+        photo.likers.forEach((f) => {
+            likersArray.push(f);
+            if (f !== null && f.id === req.params.likerId) { isLiked = true };
+        });
 
+        if (!isLiked) {
+
+            likersArray.push({ "id": req.params.likerId });
+            photo.likers = likersArray;
+            photo.likes += 1;
+            photo.save();
+
+            res.status(200).json({
+                status: 'success'
+            });
+
+        } else {
+            res.status(400).json({
+                status: 'failed',
+                message: "You already liked"
+            });
+        }
     } catch (error) {
         res.status(400).json({
             status: 'failed',
             error
-        })
+        });
     }
 }
 
 exports.deleteLike = async (req, res) => {
     try {
 
-        const photo = await Photo.findById(req.params.id);
-        photo.likes-=1;
-        photo.save();
+        const photo = await Photo.findById(req.params.photoId);
+
+        photo.likers.forEach((f, index) => {
+            if (f !== null && f.id === req.params.likerId) {
+                photo.likers[index] = null;
+                photo.likes -= 1;
+                photo.save();
+            }
+        });
 
         res.status(200).json({
             status: 'success',
-            photo
-        })
+        });
 
     } catch (error) {
         res.status(400).json({
             status: 'failed',
             error
-        })
+        });
     }
 }

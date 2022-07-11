@@ -17,8 +17,8 @@ router.route('/:id').put(updatePhoto);
 
 router.route('/:id').delete(deletePhoto);
 
-router.route('/likes/:id').put(addLike);
+router.route('/:photoId/likes/:likerId').put(addLike);
 
-router.route('/likes/:id').delete(deleteLike);
+router.route('/:photoId/likes/:likerId').delete(deleteLike);
 
 module.exports = router;

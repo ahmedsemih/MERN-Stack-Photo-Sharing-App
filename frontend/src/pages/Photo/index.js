@@ -8,6 +8,7 @@ import { getPhotoById, addLike, removeLike } from '../../services/PhotoServices'
 import { getUser, followUser, unfollowUser } from '../../services/UserServices';
 import { useUserContext } from '../../contexts/UserContext';
 import useFollowStatus from '../../hooks/useFollowStatus';
+import useLikeStatus from '../../hooks/useLikeStatus';
 
 function Photo() {
   const [photo, setPhoto] = useState("");
@@ -20,6 +21,7 @@ function Photo() {
   const { user } = useUserContext();
   const { id } = useParams();
   const [status]=useFollowStatus(user,photo.publisher);
+  const [likeStatus]=useLikeStatus(id,user);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,7 +30,8 @@ function Photo() {
     if(user !== undefined && user !== null && photo.publisher !== undefined && photo.publisher !== null){
       setFollow(status);
     } 
-  }, [id, photo.publisher, photo.likes, user,status]);
+    setLike(likeStatus);
+  }, [id, photo.publisher, photo.likes, user,status,likeStatus]);
 
   const onClickAvatar = () => {
     navigate(`/profile/${photo.publisher}`);
@@ -37,10 +40,10 @@ function Photo() {
   const onClickLike = () => {
     if (user !== photo.publisher) {
       if (like) {
-        removeLike(id);
+        removeLike(id,user);
         setLike(false);
       } else {
-        addLike(id);
+        addLike(id,user);
         setLike(true);
       }
     }
@@ -96,15 +99,15 @@ function Photo() {
             <Favorite />
           </IconButton>
           <Typography color="text.secondary">{photo.likes}</Typography>
-          <IconButton sx={{ ml: 3, color: follow ? 'rgba(20, 20, 20, 1)' : 'rgba(20, 20, 20, 0.4)' }}>
-            <PersonAddAlt1 onClick={onClickFollow} />
+          <IconButton onClick={onClickFollow}  sx={{ ml: 3, color: follow ? 'rgba(20, 20, 20, 1)' : 'rgba(20, 20, 20, 0.4)' }}>
+            <PersonAddAlt1 />
           </IconButton>
           <Typography color="text.secondary">{publisher.followers}</Typography>
           {
             user === publisher._id
             &&
-            <IconButton sx={{ ml: 'auto', color: 'rgba(20, 20, 20, 1)' }}>
-              <Edit onClick={onClickEdit} />
+            <IconButton onClick={onClickEdit} sx={{ ml: 'auto', color: 'rgba(20, 20, 20, 1)' }}>
+              <Edit />
             </IconButton>
           }
         </CardActions>

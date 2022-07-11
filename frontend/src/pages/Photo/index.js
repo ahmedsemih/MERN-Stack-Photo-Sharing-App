@@ -7,9 +7,9 @@ import moment from 'moment';
 import { getPhotoById, addLike, removeLike } from '../../services/PhotoServices';
 import { getUser, followUser, unfollowUser } from '../../services/UserServices';
 import { useUserContext } from '../../contexts/UserContext';
+import useFollowStatus from '../../hooks/useFollowStatus';
 
 function Photo() {
-
   const [photo, setPhoto] = useState("");
   const [publisher, setPublisher] = useState("");
   const [like, setLike] = useState(false);
@@ -19,12 +19,16 @@ function Photo() {
 
   const { user } = useUserContext();
   const { id } = useParams();
+  const [status]=useFollowStatus(user,photo.publisher);
   const navigate = useNavigate();
 
   useEffect(() => {
     getPhotoById(id).then(data => setPhoto(data.photo));
     getUser(photo.publisher).then(data => setPublisher(data.user));
-  }, [id, photo.publisher, photo.likes]);
+    if(user !== undefined && user !== null && photo.publisher !== undefined && photo.publisher !== null){
+      setFollow(status);
+    } 
+  }, [id, photo.publisher, photo.likes, user,status]);
 
   const onClickAvatar = () => {
     navigate(`/profile/${photo.publisher}`);
@@ -66,7 +70,7 @@ function Photo() {
 
   return (
     <Box sx={{ height: '80vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Card sx={{ boxShadow:{md: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}, p: 2, mt: '10vh' }}>
+      <Card sx={{ boxShadow: { md: 'rgba(0, 0, 0, 0.35) 0px 5px 15px' }, p: 2, mt: '10vh' }}>
         <CardHeader
           avatar={
             <Avatar sx={{ cursor: 'pointer' }} onClick={onClickAvatar} src={publisher.imageUrl} />
@@ -75,7 +79,7 @@ function Photo() {
           subheader={moment(photo.publishedAt).format('DD/MM/YYYY -  hh:mm A')}
         />
         <CardMedia
-          sx={{ maxHeight:{xs:300,sm:500} }}
+          sx={{ maxHeight: { xs: 300, sm: 500 } }}
           component="img"
           height="auto"
           image={photo.imageUrl}
@@ -105,6 +109,8 @@ function Photo() {
           }
         </CardActions>
       </Card>
+
+      {/* Alerts */}
       <Snackbar open={isOpenFollow} autoHideDuration={3000} onClose={() => setIsOpenFollow(false)} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
         <Alert severity={'error'} onClose={() => setIsOpenFollow(false)}>
           You can't follow your own account !

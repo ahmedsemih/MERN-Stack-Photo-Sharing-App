@@ -10,7 +10,7 @@ function UserTab({ followings }) {
             {
                 followings.map((user, index) => {
                     return (
-                        <Grid key={index} item xs={12} sm={6} md={4} >
+                        user !==null &&<Grid key={index} item xs={12} sm={6} md={4} >
                             <Following following={user} />
                         </Grid>
                     )

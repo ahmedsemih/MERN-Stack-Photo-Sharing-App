@@ -108,17 +108,21 @@ exports.setProfilePhoto = async (req, res) => {
 // FOLLOWING SYSTEM
 
 exports.addFollower = async (req, res) => {
-    try {
-        const follower = await User.findById(req.body.followerId);
-        const followed = await User.findById(req.body.followedId);
-        const isFriend = false;
 
+    try {
+        const follower = await User.findById(req.params.followerId);
+        const followed = await User.findById(req.params.followedId);
+
+        const isFriend = false;
+        const followingsArray = []
         follower.followings.forEach((f) => {
-            if (f.id === req.body.followedId) isFriend = true;
+            followingsArray.push(f);
+            if (f !== null && f.id === req.params.followedId) { isFriend = true };
         });
 
         if (!isFriend) {
-            follower.followings = [...follower.followings, { "id": req.body.followedId }];
+            followingsArray.push({ "id": req.params.followedId })
+            follower.followings = followingsArray;
             followed.followers += 1;
             follower.save();
             followed.save();
@@ -132,29 +136,30 @@ exports.addFollower = async (req, res) => {
                 message: "You are already friend"
             });
         }
-
     } catch (error) {
         res.status(400).json({
             status: 'failed',
             error
         });
     }
+
 };
 
 exports.deleteFollower = async (req, res) => {
+
     try {
-        const follower = await User.findById(req.body.followerId);
-        const followed = await User.findById(req.body.followedId);
+        const follower = await User.findById(req.params.followerId);
+        const followed = await User.findById(req.params.followedId);
 
         follower.followings.forEach((f, index) => {
-            if (f.id === req.body.followedId) {
-                follower.followings[index] = null
+
+            if (f !== null && f.id === req.params.followedId) {
+                follower.followings[index] = null;
                 followed.followers -= 1;
                 followed.save();
                 follower.save();
             }
         });
-
         res.status(200).json({
             status: 'success'
         });
@@ -162,6 +167,6 @@ exports.deleteFollower = async (req, res) => {
         res.status(400).json({
             status: 'failed',
             error
-        });
+        })
     }
 }

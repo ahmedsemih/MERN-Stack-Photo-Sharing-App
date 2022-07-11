@@ -11,9 +11,9 @@ router.route('/register').post(createUser);
 
 router.route('/login').post(loginUser);
 
-router.route('/followers').post(addFollower);
+router.route('/:followedId/followers/:followerId').post(addFollower);
 
-router.route('/followers').delete(deleteFollower);
+router.route('/:followedId/followers/:followerId').delete(deleteFollower);
 
 router.route('/:id/photo').put(setProfilePhoto);
 

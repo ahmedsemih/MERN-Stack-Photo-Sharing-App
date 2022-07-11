@@ -5,20 +5,23 @@ import { PersonRemove, PersonAddAlt1 } from '@mui/icons-material';
 
 import { getUser, followUser, unfollowUser } from '../../../services/UserServices';
 import { useUserContext } from '../../../contexts/UserContext';
+import useFollowStatus from '../../../hooks/useFollowStatus';
 
 function Following({ following }) {
 
   const [fUser, setFUser] = useState("");
-  const [isFollowed, setIsFollowed] = useState(true);
-
   const { user } = useUserContext();
+  const [status] = useFollowStatus(user,following.id);
+
+  const [isFollowed, setIsFollowed] = useState(false);
   const navigate=useNavigate();
 
   useEffect(() => {
     if(following !== null){
       getUser(following.id).then(data => setFUser(data.user));
+      setIsFollowed(status);
     }
-  }, [following]);
+  }, [following,status]);
 
   const onClickFollow = () => {
     followUser(user, following.id);

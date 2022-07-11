@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Box, Input, Button, Avatar, Snackbar, Alert } from '@mui/material';
 
 import { uploadPhotoToCloudinary } from '../services/PhotoServices';
 import { setProfilePhoto } from '../services/UserServices';
 
 const PPChanger = ({ setOpenChanger, userId, oldImageUrl }) => {
-
-    const navigate = useNavigate();
 
     const [image, setImage] = useState("");
     const [openAlert, setOpenAlert] = useState(false);

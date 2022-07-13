@@ -19,13 +19,14 @@ function Image({ imageUrl, title, publisher, publisherName, id }) {
   }, [likeStatus]);
 
   const onClickLike = () => {
-    if (likeButton) {
-      removeLike(id, user);
-    } else {
-      addLike(id, user);
+    if (user) {
+      if (likeButton) {
+        removeLike(id, user);
+      } else {
+        addLike(id, user);
+      }
+      setLikeButton(!likeButton);
     }
-    setLikeButton(!likeButton);
-
   }
 
   const onClickEdit = () => {
@@ -54,4 +55,4 @@ function Image({ imageUrl, title, publisher, publisherName, id }) {
   )
 }
 
-export default Image
+export default Image;

@@ -5,7 +5,7 @@ const useFollowStatus = (follower, following) => {
     const [status, setStatus] = useState(false);
 
     useEffect(()=>{
-        if (follower) {
+        if (follower && follower !== null) {
             getUser(follower)
                 .then(result => {
                     result.user.followings && result.user.followings.forEach(f => {

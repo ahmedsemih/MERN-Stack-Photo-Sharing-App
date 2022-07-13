@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { Box, Button, Typography, MenuItem, InputLabel, Select, TextField, Snackbar, Alert } from '@mui/material';
 
 import { createCategory, updateCategoryById, deleteCategoryById } from '../services/CategoryServices';
 
-const CategoryEditModal = ({ categories, isEdit, setOpen }) => {
+const CategoryEditModal = forwardRef(({ categories, isEdit, setOpen }, ref) => {
 
     const [catIndex, setCatIndex] = useState("0");
     const [status, setStatus] = useState(true);
@@ -122,7 +122,7 @@ const CategoryEditModal = ({ categories, isEdit, setOpen }) => {
                                     type='submit'
                                     onClick={handleCreate}
                                 >
-                                    Save
+                                    Create
                                 </Button>
                                 <Button
                                     sx={{ mt: 3, ml: 3 }}
@@ -155,6 +155,6 @@ const CategoryEditModal = ({ categories, isEdit, setOpen }) => {
             </Snackbar>
         </>
     )
-}
+});
 
 export default CategoryEditModal;

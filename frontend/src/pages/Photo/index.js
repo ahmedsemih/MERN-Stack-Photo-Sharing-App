@@ -17,53 +17,62 @@ function Photo() {
   const [follow, setFollow] = useState(false);
   const [isOpenFollow, setIsOpenFollow] = useState(false);
   const [isOpenLike, setIsOpenLike] = useState(false);
+  const [loginAlert, setLoginAlert] = useState(false);
 
   const { user } = useUserContext();
   const { id } = useParams();
-  const [status]=useFollowStatus(user,photo.publisher);
-  const [likeStatus]=useLikeStatus(id,user);
+  const [status] = useFollowStatus(user, photo.publisher);
+  const [likeStatus] = useLikeStatus(id, user);
   const navigate = useNavigate();
 
   useEffect(() => {
     getPhotoById(id).then(data => setPhoto(data.photo));
     getUser(photo.publisher).then(data => setPublisher(data.user));
-    if(user !== undefined && user !== null && photo.publisher !== undefined && photo.publisher !== null){
+    if (user !== undefined && user !== null && photo.publisher !== undefined && photo.publisher !== null) {
       setFollow(status);
-    } 
+    }
     setLike(likeStatus);
-  }, [id, photo.publisher, photo.likes, user,status,likeStatus]);
+  }, [id, photo.publisher, photo.likes, user, status, likeStatus]);
 
   const onClickAvatar = () => {
     navigate(`/profile/${photo.publisher}`);
   };
 
   const onClickLike = () => {
-    if (user !== photo.publisher) {
-      if (like) {
-        removeLike(id,user);
-        setLike(false);
-      } else {
-        addLike(id,user);
-        setLike(true);
+    if (user) {
+      if (user !== photo.publisher) {
+        if (like) {
+          removeLike(id, user);
+          setLike(false);
+        } else {
+          addLike(id, user);
+          setLike(true);
+        }
       }
-    }
-    else {
-      setIsOpenLike(true);
+      else {
+        setIsOpenLike(true);
+      }
+    } else {
+      setLoginAlert(true);
     }
   };
 
   const onClickFollow = () => {
-    if (user !== photo.publisher) {
-      if (follow) {
-        unfollowUser(user, photo.publisher)
-        setFollow(false);
-      } else {
-        followUser(user, photo.publisher);
-        setFollow(true);
+    if (user) {
+      if (user && user !== photo.publisher) {
+        if (follow) {
+          unfollowUser(user, photo.publisher)
+          setFollow(false);
+        } else {
+          followUser(user, photo.publisher);
+          setFollow(true);
+        }
       }
-    }
-    else {
-      setIsOpenFollow(true);
+      else {
+        setIsOpenFollow(true);
+      }
+    } else {
+      setLoginAlert(true);
     }
   };
 
@@ -99,7 +108,7 @@ function Photo() {
             <Favorite />
           </IconButton>
           <Typography color="text.secondary">{photo.likes}</Typography>
-          <IconButton onClick={onClickFollow}  sx={{ ml: 3, color: follow ? 'rgba(20, 20, 20, 1)' : 'rgba(20, 20, 20, 0.4)' }}>
+          <IconButton onClick={onClickFollow} sx={{ ml: 3, color: follow ? 'rgba(20, 20, 20, 1)' : 'rgba(20, 20, 20, 0.4)' }}>
             <PersonAddAlt1 />
           </IconButton>
           <Typography color="text.secondary">{publisher.followers}</Typography>
@@ -123,6 +132,12 @@ function Photo() {
       <Snackbar open={isOpenLike} autoHideDuration={3000} onClose={() => setIsOpenLike(false)} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
         <Alert severity={'error'} onClose={() => setIsOpenLike(false)}>
           You can't like your own photos !
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={loginAlert} autoHideDuration={3000} onClose={() => setLoginAlert(false)} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
+        <Alert severity={'error'} onClose={() => setLoginAlert(false)}>
+          You must be logged in to do this.
         </Alert>
       </Snackbar>
     </Box>

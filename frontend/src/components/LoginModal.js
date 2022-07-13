@@ -29,10 +29,10 @@ const LoginModal = forwardRef(({ setOpen, setLoginAlert, setResult }, ref) => {
             setResult(result);
             setLoginAlert(true);
             resetForm();
-            setUser(user._id)
-            localStorage.setItem('UID', user._id);
 
             if (user._id !== null) {
+                setUser(user._id)
+                localStorage.setItem('UID', user._id);
                 setOpen(false);
             }
 

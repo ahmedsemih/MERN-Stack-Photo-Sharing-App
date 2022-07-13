@@ -39,7 +39,7 @@ const UserSchema=new mongoose.Schema({
 
 UserSchema.pre('save',function(next){
     const user=this;
-    bcrypt.hash(user.password,10,(error,hash)=>{
+    bcrypt.hash(user.password,5,(error,hash)=>{
         user.password=hash;
         next();
     });

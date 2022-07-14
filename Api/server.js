@@ -24,6 +24,6 @@ app.use('/users', userRoutes);
 mongoose.connect(process.env.MONGODB_URL)
     .then(console.log("Successfully connected to database"));
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log(`Server is running on port ${port}`);
 });

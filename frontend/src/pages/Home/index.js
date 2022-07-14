@@ -23,7 +23,7 @@ function Home() {
   return (
     <Box>
       <Header />
-      <Box sx={{ px: 5, py: 3, display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ px: 5, py: 5, display: 'flex', justifyContent: 'center' }}>
         <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={3} >
           {
             photos.map((photo,index)=>{

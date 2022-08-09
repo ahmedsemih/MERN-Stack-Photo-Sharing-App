@@ -8,7 +8,7 @@ const categoryRoutes = require('./routes/categoryRoutes');
 const userRoutes = require('./routes/userRoutes');
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 // MIDDLEWARES
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
@@ -24,6 +24,6 @@ app.use('/users', userRoutes);
 mongoose.connect(process.env.MONGODB_URL)
     .then(console.log("Successfully connected to database"));
 
-app.listen(process.env.PORT || port, () => {
+app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

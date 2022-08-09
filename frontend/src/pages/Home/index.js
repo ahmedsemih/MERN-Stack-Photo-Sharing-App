@@ -10,12 +10,12 @@ import { useSearchParams } from 'react-router-dom';
 function Home() {
 
   const [photos, setPhotos] = useState([]);
-  const [searchParams]=useSearchParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    if(searchParams.get('category')){
-      getPhotosByCategoryId(searchParams.get('category')).then(data=>setPhotos(data.photos));
-    }else{
+    if (searchParams.get('category')) {
+      getPhotosByCategoryId(searchParams.get('category')).then(data => setPhotos(data.photos));
+    } else {
       getAllPhotos().then(data => setPhotos(data.photos));
     }
   }, [searchParams]);
@@ -23,10 +23,10 @@ function Home() {
   return (
     <Box>
       <Header />
-      <Box sx={{ px: 5, py: 5, display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ px: 5, py: 5, display: 'flex', justifyContent: 'center', color: '#E61605' }}>
         <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={3} >
           {
-            photos.map((photo,index)=>{
+            photos.map((photo, index) => {
               return <Image key={index} id={photo._id} title={photo.title} imageUrl={photo.imageUrl} publisher={photo.publisher} publisherName={photo.publisherName} />
             })
           }

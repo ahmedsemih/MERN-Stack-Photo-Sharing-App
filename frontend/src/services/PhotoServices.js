@@ -35,8 +35,8 @@ export const addPhoto = async (imageUrl, title, description, category, publisher
 export const uploadPhotoToCloudinary = async (image) => {
     const data = new FormData();
     data.append("file", image);
-    data.append("upload_preset", "yop7c76h");
-    data.append("cloud_name", "dcm29mbom");
+    data.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
+    data.append("cloud_name", process.env.REACT_APP_CLOUD_NAMEE);
     const result = await fetch(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, {
         method: 'POST',
         body: data

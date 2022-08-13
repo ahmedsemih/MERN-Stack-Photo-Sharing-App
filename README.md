@@ -1,10 +1,10 @@
 https://user-images.githubusercontent.com/102798814/184489684-947d0e84-f56f-4f34-83cb-8942772b9f2e.mp4
 
-# PHOTORELLO
+# Photorello
 
 MERN-Stack Photo Sharing Application.
 
-**Live demo: [https://photorello.netlify.app/)**
+**Live demo: [https://photorello.netlify.app/](https://photorello.netlify.app/)**
 
 ## Frontend built with
 

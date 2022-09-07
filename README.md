@@ -2,39 +2,39 @@ https://user-images.githubusercontent.com/102798814/184489684-947d0e84-f56f-4f34
 
 # Photorello
 
-MERN-Stack Photo Sharing Application.
+This is a photo sharing app like pinterest. Users can share a photo and edit or delete it. 
+They can like or dislike other people's photos. If they want they can follow other users. 
+Admins can create or edit categories.
 
 **Live demo: [https://photorello.netlify.app/](https://photorello.netlify.app/)**
 
-## Frontend built with
+## Built with
 
-- [React](https://reactjs.org/)
+- [React](https://reactjs.org/) - Javascript Library For UI
 
-- [React Router](https://v5.reactrouter.com/)
+- [MUI](https://mui.com/) - UI Component Library
 
-- [MUI](https://mui.com/)
+- [Javascript](https://www.javascript.com/) - Main Language
 
-- [Axios](https://axios-http.com/docs/intro/)
+- [NodeJS](https://nodejs.org/en/) - Server Environment
 
-- [Momentjs](https://momentjs.com/)
+- [Expressjs](https://expressjs.com/) - NodeJS Framework For Server Processes
 
-- [Formik](https://formik.org/)
+- [MongoDB](https://www.mongodb.com/) - NOSQL Database
 
-- [Yup](https://www.npmjs.com/package/yup)
+- [Mongoose](https://mongoosejs.com/) - Database ORM
 
-## Backend built with
+- [Formik](https://formik.org/) - React Form Library
 
-- [Express](https://expressjs.com/)
+- [Yup](https://www.npmjs.com/package/yup) - For Validations
 
-- [Mongoose](https://mongoosejs.com/)
+- [Bcryptjs](https://www.npmjs.com/package/bcryptjs) - For Encryption
 
-- [Bcryptjs](https://www.npmjs.com/package/bcryptjs)
+- [Cloudinary](https://cloudinary.com/) - Cloud Image Storage
 
-- [Cors](https://www.npmjs.com/package/cors)
+- [Netlify](https://www.netlify.com/) - Hosting for UI
 
-## Image Cloud Storage
-
-- [Cloudinary](https://cloudinary.com/)
+- [Heroku](https://www.heroku.com/home) - Hosting for API
 
 ## Getting Started
 

@@ -6,8 +6,6 @@ This is a photo sharing app like pinterest. Users can share a photo and edit or 
 They can like or dislike other people's photos. If they want they can follow other users. 
 Admins can create or edit categories.
 
-**Live demo: [https://photorello.netlify.app/](https://photorello.netlify.app/)**
-
 ## Built with
 
 - [React](https://reactjs.org/) - Javascript Library For UI
@@ -31,10 +29,6 @@ Admins can create or edit categories.
 - [Bcryptjs](https://www.npmjs.com/package/bcryptjs) - For Encryption
 
 - [Cloudinary](https://cloudinary.com/) - Cloud Image Storage
-
-- [Netlify](https://www.netlify.com/) - Hosting for UI
-
-- [Heroku](https://www.heroku.com/home) - Hosting for API
 
 ## Getting Started
 
